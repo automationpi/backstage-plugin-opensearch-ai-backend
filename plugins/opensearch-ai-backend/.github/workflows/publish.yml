@@ -50,16 +50,15 @@ jobs:
             npm version patch --no-git-tag-version
             NEW_VERSION=$(node -p "require('./package.json').version")
             echo "New version: $NEW_VERSION"
+            echo "version-changed=true" >> $GITHUB_OUTPUT
           fi
 
       - name: Publish to NPM
-        if: steps.version-check.outputs.version-changed == 'true' || github.event_name == 'workflow_dispatch'
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Create Git tag
-        if: steps.version-check.outputs.version-changed == 'true' || github.event_name == 'workflow_dispatch'
         run: |
           VERSION=$(node -p "require('./package.json').version")
           git config --local user.email "action@github.com"
