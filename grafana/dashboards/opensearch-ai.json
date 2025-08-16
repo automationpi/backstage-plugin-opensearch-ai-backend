@@ -1,0 +1,44 @@
+{
+  "title": "Backstage OpenSearch AI Plugin",
+  "panels": [
+    {
+      "type": "stat",
+      "title": "QPS (success)",
+      "gridPos": {"x": 0, "y": 0, "w": 6, "h": 5},
+      "targets": [{
+        "expr": "sum(rate(opensearch_ai_query_total{outcome=\"success\"}[5m]))",
+        "legendFormat": "qps"
+      }]
+    },
+    {
+      "type": "gauge",
+      "title": "AI Fallback Rate",
+      "gridPos": {"x": 6, "y": 0, "w": 6, "h": 5},
+      "targets": [{
+        "expr": "sum(rate(opensearch_ai_ai_usage_total{outcome=\"failure\"}[5m])) / clamp_min(sum(rate(opensearch_ai_ai_usage_total[5m])), 1e-9)",
+        "legendFormat": "fallback"
+      }],
+      "fieldConfig": {"defaults": {"min": 0, "max": 1}}
+    },
+    {
+      "type": "timeseries",
+      "title": "p95 Latency by Stage (ms)",
+      "gridPos": {"x": 0, "y": 5, "w": 12, "h": 8},
+      "targets": [{
+        "expr": "histogram_quantile(0.95, sum(rate(opensearch_ai_query_latency_ms_bucket[5m])) by (le, stage))",
+        "legendFormat": "{{stage}}"
+      }]
+    },
+    {
+      "type": "timeseries",
+      "title": "Indexing Throughput by Source",
+      "gridPos": {"x": 0, "y": 13, "w": 12, "h": 8},
+      "targets": [{
+        "expr": "sum by (source) (rate(opensearch_ai_indexed_total[5m]))",
+        "legendFormat": "{{source}}"
+      }]
+    }
+  ],
+  "schemaVersion": 38,
+  "version": 1
+}
