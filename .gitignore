@@ -77,3 +77,6 @@ plugins/*/*.tgz
 packages/*/dist/
 packages/*/node_modules/
 packages/*/*.tgz
+
+# Claude AI assistant files
+.claude/

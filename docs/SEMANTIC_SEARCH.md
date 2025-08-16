@@ -43,7 +43,7 @@ search:
 ## 2) Embedding Provider
 Replace the included `NoOpEmbeddingService` with a real provider. Sketch:
 ```ts
-import type { EmbeddingService } from 'plugins/opensearch-ai-backend/src/services/ai/EmbeddingService';
+import type { EmbeddingService } from '@mexl/backstage-plugin-opensearch-ai-backend';
 
 class OpenAIEmbeddingService implements EmbeddingService {
   constructor(private readonly model = 'text-embedding-3-small', private readonly apiKey = process.env.OPENAI_API_KEY!) {}

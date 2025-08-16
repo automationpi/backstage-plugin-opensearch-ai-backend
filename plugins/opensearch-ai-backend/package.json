@@ -48,9 +48,6 @@
     "pack:dry": "npm pack --dry-run || true",
     "clean": "rm -rf dist"
   },
-  "bin": {
-    "set-repo-badges": "../../scripts/set-repo-badges.js"
-  },
   "devDependencies": {
     "typescript": "^5.4.0",
     "@types/node": "^20.11.30",

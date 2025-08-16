@@ -6,7 +6,7 @@ Example (pseudo-code for Backstage backend module):
 
 ```ts
 import express from 'express';
-import { createRouterFromConfig } from '../plugins/opensearch-ai-backend';
+import { createRouterFromConfig } from '@mexl/backstage-plugin-opensearch-ai-backend';
 
 const app = express();
 app.use(express.json());
