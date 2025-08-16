@@ -56,6 +56,23 @@ opensearch-ai:
 - **Rerank + Semantic**: Good balance of relevance and semantic understanding
 - **All three enabled**: Maximum search quality but highest API costs
 
+## Quick Start
+
+### Start OpenSearch locally
+```bash
+docker run -d \
+  -p 9200:9200 \
+  -p 9600:9600 \
+  -e "discovery.type=single-node" \
+  -e "OPENSEARCH_INITIAL_ADMIN_PASSWORD=yourStrongPassword123!" \
+  opensearchproject/opensearch:latest
+```
+
+### Install Plugin
+```bash
+npm install @mexl/backstage-plugin-opensearch-ai-backend
+```
+
 ## Config
 See `docs/AI.md` and `docs/USAGE.md` for configuration and wiring examples.
 
