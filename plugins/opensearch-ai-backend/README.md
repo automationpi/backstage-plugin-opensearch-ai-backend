@@ -50,6 +50,10 @@ const searchRouter = createRouterFromConfig({
   opensearch: {
     hosts: ['http://localhost:9200'],
     indexPrefix: 'backstage',
+    auth: {
+      username: 'admin',
+      password: 'yourStrongPassword123!',
+    },
   },
   ai: {
     enabled: true,
@@ -83,6 +87,9 @@ search:
     hosts:
       - http://localhost:9200
     indexPrefix: backstage
+    auth:
+      username: admin
+      password: yourStrongPassword123!
   ai:
     enabled: true
     provider: openai
