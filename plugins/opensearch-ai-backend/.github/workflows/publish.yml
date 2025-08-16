@@ -28,29 +28,14 @@ jobs:
       - name: Build package
         run: npm run build
 
-      - name: Check if version changed
-        id: version-check
-        run: |
-          # Get current version from package.json
-          CURRENT_VERSION=$(node -p "require('./package.json').version")
-          
-          # Check if package exists on npm
-          if npm view @mexl/backstage-plugin-opensearch-ai-backend version &>/dev/null; then
-            PUBLISHED_VERSION=$(npm view @mexl/backstage-plugin-opensearch-ai-backend version)
-            echo "Package exists. Published version: $PUBLISHED_VERSION"
-            if [ "$CURRENT_VERSION" != "$PUBLISHED_VERSION" ]; then
-              echo "version-changed=true" >> $GITHUB_OUTPUT
-            else
-              npm version patch --no-git-tag-version
-              echo "version-changed=true" >> $GITHUB_OUTPUT
-            fi
-          else
-            echo "Package does not exist on npm, will publish current version"
-            echo "version-changed=true" >> $GITHUB_OUTPUT
-          fi
-
       - name: Publish to NPM
-        run: npm publish --access public
+        run: |
+          # Always publish - let npm handle version conflicts
+          npm publish --access public || {
+            echo "Publish failed, trying version bump"
+            npm version patch --no-git-tag-version
+            npm publish --access public
+          }
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
