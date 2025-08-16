@@ -1,6 +1,6 @@
 # 🔍 OpenSearch AI-Enhanced Search for Backstage
 
-[![npm version](https://badge.fury.io/js/@mexl%2Fbackstage-plugin-opensearch-ai-backend.svg)](https://badge.fury.io/js/@mexl%2Fbackstage-plugin-opensearch-ai-backend)
+[![npm version](https://img.shields.io/npm/v/@mexl/backstage-plugin-opensearch-ai-backend.svg)](https://www.npmjs.com/package/@mexl/backstage-plugin-opensearch-ai-backend)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 Transform your Backstage search experience with AI-powered query understanding and semantic search. This plugin supercharges OpenSearch with intelligent query rewriting, result re-ranking, and vector embeddings—all without requiring any frontend changes.
