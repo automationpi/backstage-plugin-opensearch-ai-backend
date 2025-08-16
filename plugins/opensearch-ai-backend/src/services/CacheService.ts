@@ -24,7 +24,10 @@ export class InMemoryCacheService implements CacheService {
   }
 
   set<T>(key: string, value: T, ttlSeconds?: number): boolean {
-    return this.cache.set(key, value, ttlSeconds);
+    if (ttlSeconds !== undefined) {
+      return this.cache.set(key, value, ttlSeconds);
+    }
+    return this.cache.set(key, value);
   }
 
   del(key: string): number {

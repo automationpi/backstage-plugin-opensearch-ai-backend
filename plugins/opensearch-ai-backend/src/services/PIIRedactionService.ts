@@ -1,4 +1,4 @@
-export interface PIIRedactionService {
+export interface IPIIRedactionService {
   redact(text: string): { redacted: string; found: string[] };
   isEnabled(): boolean;
 }
@@ -12,7 +12,7 @@ export type PIIRedactionConfig = {
   customPatterns?: { name: string; pattern: RegExp; replacement?: string }[];
 };
 
-export class PIIRedactionService implements PIIRedactionService {
+export class PIIRedactionService implements IPIIRedactionService {
   private patterns: { name: string; pattern: RegExp; replacement: string }[] = [];
 
   constructor(private config: PIIRedactionConfig) {
@@ -115,7 +115,7 @@ export class PIIRedactionService implements PIIRedactionService {
   }
 }
 
-export class NoOpPIIRedactionService implements PIIRedactionService {
+export class NoOpPIIRedactionService implements IPIIRedactionService {
   redact(text: string): { redacted: string; found: string[] } {
     return { redacted: text, found: [] };
   }

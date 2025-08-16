@@ -1,6 +1,7 @@
 export type RewriteInput = {
   query: string;
   context?: Record<string, unknown>;
+  filters?: Record<string, unknown>;
 };
 
 export type RewriteOutput = {
