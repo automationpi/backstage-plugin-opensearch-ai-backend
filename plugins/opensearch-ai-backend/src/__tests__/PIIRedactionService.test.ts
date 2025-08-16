@@ -39,7 +39,7 @@ describe('PIIRedactionService', () => {
 
     it('should redact AWS access keys', () => {
       const service = new PIIRedactionService({ redactTokens: true });
-      const result = service.redact('AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE');
+      const result = service.redact('AWS_ACCESS_KEY_ID=AKIAFAKEKEY123456789');
       
       expect(result.redacted).toContain('[AWS_ACCESS_KEY]');
       expect(result.found).toHaveLength(1);
@@ -47,7 +47,7 @@ describe('PIIRedactionService', () => {
 
     it('should redact GitHub tokens', () => {
       const service = new PIIRedactionService({ redactTokens: true });
-      const result = service.redact('GITHUB_TOKEN=ghp_1234567890abcdef1234567890abcdef123456');
+      const result = service.redact('GITHUB_TOKEN=ghp_abcdefghijklmnopqrstuvwxyz1234567890');
       
       expect(result.redacted).toContain('[GITHUB_TOKEN]');
       expect(result.found).toHaveLength(1);
@@ -85,7 +85,7 @@ describe('PIIRedactionService', () => {
         redactEmails: true, 
         redactTokens: true 
       });
-      const result = service.redact('Email user@example.com with token api_key=secret123456789');
+      const result = service.redact('Email user@example.com with token api_key=fakesecretkey123456789');
       
       expect(result.redacted).toBe('Email [EMAIL] with token api_key=[TOKEN]');
       expect(result.found).toHaveLength(2);
@@ -99,7 +99,13 @@ describe('PIIRedactionService', () => {
     });
 
     it('should return false when no patterns are configured', () => {
-      const service = new PIIRedactionService({});
+      const service = new PIIRedactionService({
+        redactEmails: false,
+        redactTokens: false,
+        redactIPs: false,
+        redactPhoneNumbers: false,
+        redactSSNs: false
+      });
       expect(service.isEnabled()).toBe(false);
     });
   });

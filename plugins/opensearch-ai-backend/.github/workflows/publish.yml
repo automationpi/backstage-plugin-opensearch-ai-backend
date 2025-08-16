@@ -1,0 +1,68 @@
+name: Publish to NPM
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm test
+
+      - name: Build package
+        run: npm run build
+
+      - name: Check if version changed
+        id: version-check
+        run: |
+          # Get current version from package.json
+          CURRENT_VERSION=$(node -p "require('./package.json').version")
+          
+          # Get published version from npm (if it exists)
+          PUBLISHED_VERSION=$(npm view @mexl/backstage-plugin-opensearch-ai-backend version 2>/dev/null || echo "0.0.0")
+          
+          echo "Current version: $CURRENT_VERSION"
+          echo "Published version: $PUBLISHED_VERSION"
+          
+          if [ "$CURRENT_VERSION" != "$PUBLISHED_VERSION" ]; then
+            echo "version-changed=true" >> $GITHUB_OUTPUT
+            echo "Version changed from $PUBLISHED_VERSION to $CURRENT_VERSION"
+          else
+            echo "version-changed=false" >> $GITHUB_OUTPUT
+            echo "Version unchanged, bumping patch version"
+            # Increment patch version
+            npm version patch --no-git-tag-version
+            NEW_VERSION=$(node -p "require('./package.json').version")
+            echo "New version: $NEW_VERSION"
+          fi
+
+      - name: Publish to NPM
+        if: steps.version-check.outputs.version-changed == 'true' || github.event_name == 'workflow_dispatch'
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Create Git tag
+        if: steps.version-check.outputs.version-changed == 'true' || github.event_name == 'workflow_dispatch'
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git tag "v$VERSION"
+          git push origin "v$VERSION"

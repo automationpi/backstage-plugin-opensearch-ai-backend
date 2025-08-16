@@ -43,12 +43,12 @@ export class PIIRedactionService implements IPIIRedactionService {
         },
         {
           name: 'aws_access_key',
-          pattern: /\bAKIA[0-9A-Z]{16}\b/g,
+          pattern: /AKIA[0-9A-Z]{16}/g,
           replacement: '[AWS_ACCESS_KEY]',
         },
         {
           name: 'github_token',
-          pattern: /\bghp_[A-Za-z0-9]{36}\b/g,
+          pattern: /ghp_[A-Za-z0-9]{36}/g,
           replacement: '[GITHUB_TOKEN]',
         },
         {

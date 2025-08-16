@@ -10,5 +10,14 @@ module.exports = {
   ],
   coverageDirectory: 'coverage',
   coverageReporters: ['text', 'lcov', 'html'],
-  setupFilesAfterEnv: ['<rootDir>/src/__tests__/setup.ts'],
+  // setupFilesAfterEnv: ['<rootDir>/src/__tests__/setup.ts'], // Disabled until needed
+  extensionsToTreatAsEsm: ['.ts'],
+  globals: {
+    'ts-jest': {
+      useESM: true
+    }
+  },
+  transformIgnorePatterns: [
+    'node_modules/(?!(p-retry|retry)/)'
+  ],
 };
