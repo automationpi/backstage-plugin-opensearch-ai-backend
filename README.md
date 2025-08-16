@@ -27,12 +27,13 @@ npm install @mexl/backstage-plugin-opensearch-ai-backend
 The easiest way to get started is with Docker:
 
 ```bash
-# Clone this repo for the docker-compose file
-git clone <this-repo>
-cd backstage-opensearch-ai-plugin
-
 # Start OpenSearch locally
-docker compose -f dev/docker-compose.yml up -d
+docker run -d \
+  -p 9200:9200 \
+  -p 9600:9600 \
+  -e "discovery.type=single-node" \
+  -e "OPENSEARCH_INITIAL_ADMIN_PASSWORD=yourStrongPassword123!" \
+  opensearchproject/opensearch:latest
 ```
 
 Or use your existing OpenSearch cluster—this plugin works with any OpenSearch 2.x installation.
@@ -49,6 +50,10 @@ const searchRouter = createRouterFromConfig({
   opensearch: {
     hosts: ['http://localhost:9200'],
     indexPrefix: 'backstage',
+    auth: {
+      username: 'admin',
+      password: 'yourStrongPassword123!',
+    },
   },
   ai: {
     enabled: true,
@@ -82,6 +87,9 @@ search:
     hosts:
       - http://localhost:9200
     indexPrefix: backstage
+    auth:
+      username: admin
+      password: yourStrongPassword123!
   ai:
     enabled: true
     provider: openai
@@ -306,7 +314,12 @@ cd plugins/opensearch-ai-backend
 npm install
 
 # Start OpenSearch for testing
-docker compose -f ../../dev/docker-compose.yml up -d
+docker run -d \
+  -p 9200:9200 \
+  -p 9600:9600 \
+  -e "discovery.type=single-node" \
+  -e "OPENSEARCH_INITIAL_ADMIN_PASSWORD=yourStrongPassword123!" \
+  opensearchproject/opensearch:latest
 
 # Build the plugin
 npm run build
