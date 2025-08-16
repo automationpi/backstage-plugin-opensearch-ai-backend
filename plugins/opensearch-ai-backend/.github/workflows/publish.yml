@@ -28,14 +28,11 @@ jobs:
       - name: Build package
         run: npm run build
 
-      - name: Publish to NPM
+      - name: Bump version and publish
         run: |
-          # Always publish - let npm handle version conflicts
-          npm publish --access public || {
-            echo "Publish failed, trying version bump"
-            npm version patch --no-git-tag-version
-            npm publish --access public
-          }
+          # Always bump version first to avoid conflicts
+          npm version patch --no-git-tag-version
+          npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
