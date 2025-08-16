@@ -273,16 +273,16 @@ POST /api/opensearch-ai/index
 
 ## 🧪 Testing
 
+Basic unit tests are available for core utilities:
+
 ```bash
-# Run the test suite
+# Run available tests
+cd plugins/opensearch-ai-backend
 npm test
-
-# Run with coverage
-npm run test:coverage
-
-# Watch mode for development
-npm run test:watch
 ```
+
+**Current coverage**: Core service utilities (cache, error handling, PII redaction)  
+**Coming soon**: Integration tests with OpenSearch and AI providers
 
 ## 🤝 Contributing
 
