@@ -1,6 +1,6 @@
 {
   "name": "@mexl/backstage-plugin-opensearch-ai-backend",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "private": false,
   "description": "OpenSearch AI-enhanced Backend Plugin for Backstage",
   "main": "dist/index.cjs.js",
