@@ -28,13 +28,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/mexl/backstage-opensearch-ai-plugin.git",
-    "directory": "plugins/opensearch-ai-backend"
+    "url": "https://github.com/automationpi/backstage-plugin-opensearch-ai-backend.git"
   },
   "bugs": {
-    "url": "https://github.com/mexl/backstage-opensearch-ai-plugin/issues"
+    "url": "https://github.com/automationpi/backstage-plugin-opensearch-ai-backend/issues"
   },
-  "homepage": "https://github.com/mexl/backstage-opensearch-ai-plugin#readme",
+  "homepage": "https://github.com/automationpi/backstage-plugin-opensearch-ai-backend#readme",
   "backstage": { "role": "backend-plugin-module" },
   "scripts": {
     "build": "tsc -p tsconfig.json",
