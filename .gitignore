@@ -80,3 +80,6 @@ packages/*/*.tgz
 
 # Claude AI assistant files
 .claude/
+
+# Documentation (development/internal only)
+docs/
